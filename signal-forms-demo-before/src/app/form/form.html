@@ -1,0 +1,25 @@
+<div class="form-container">
+  <h2>Criar Conta</h2>
+  <form action="">
+    <div class="field">
+      <label for="username">Nome de usuário</label>
+      <input
+        id="username"
+        type="text"
+        [formField]="form.profile.username"
+        autocomplete="none"
+        autofill="none"
+      />
+    </div>
+    <button
+      type="submit"
+      (click)="
+        model.set({ profile: { username: 'something' } });
+        $event.preventDefault()
+      "
+    >
+      Criar conta
+    </button>
+  </form>
+  <pre>{{ model() | json }}</pre>
+</div>
