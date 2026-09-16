@@ -1,0 +1,69 @@
+<div class="form-container">
+  <h2>Criar Conta</h2>
+  <form>
+    <div class="field">
+      @let username = form.username();
+      @let showUsernameError = username.invalid() && username.touched();
+      <label for="username">Nome de usuário</label>
+      <input
+        id="username"
+        type="text"
+        [formField]="form.username"
+        autocomplete="none"
+        autofill="none"
+        [class.error]="showUsernameError"
+      />
+      @if (username.pending()) {
+        <p class="message info">Verificando disponibilidade...</p>
+      }
+
+      @if (username.dirty()) {
+        @for (error of username.errors(); track error.kind) {
+          @if (error.kind === 'username_taken') {
+            <ul class="message error">
+              <li>{{ error.message }}</li>
+            </ul>
+          }
+        }
+      } @else if (showUsernameError) {
+        <ul class="message error">
+          @for (error of username.errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+    <div class="field">
+      @let email = form.email();
+      @let showEmailError = email.invalid() && email.touched();
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="text"
+        [formField]="form.email"
+        autocomplete="none"
+        autofill="none"
+        [class.error]="showEmailError"
+      />
+      @if (showEmailError) {
+        <ul class="message error">
+          @for (error of email.errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+    <div class="field">
+      <label for="email">Idade</label>
+      <input
+        id="age"
+        type="number"
+        [formField]="form.age"
+        autocomplete="none"
+        autofill="none"
+      />
+    </div>
+    <button type="submit" (click)="$event.preventDefault()">Criar conta</button>
+  </form>
+  <pre>{{ model() | json }}</pre>
+</div>
