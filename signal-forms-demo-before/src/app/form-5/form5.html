@@ -1,0 +1,92 @@
+<div class="form-container">
+  <h2>Criar Conta</h2>
+  <form>
+    <div class="field">
+      @let username = form.username();
+      @let showUsernameError = username.invalid() && username.touched();
+      <label for="username">Nome de usuário</label>
+      <input id="username" type="text" [formField]="form.username" />
+      @if (username.pending()) {
+        <p class="message info">Verificando disponibilidade...</p>
+      }
+
+      @if (username.dirty()) {
+        @for (error of username.errors(); track error.kind) {
+          @if (error.kind === 'username_taken') {
+            <ul class="message error">
+              <li>{{ error.message }}</li>
+            </ul>
+          }
+        }
+      } @else if (showUsernameError) {
+        <ul class="message error">
+          @for (error of username.errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+    <div class="field">
+      @let email = form.email();
+      @let showEmailError = email.invalid() && email.touched();
+      <label for="email">Email</label>
+      <input id="email" type="text" [formField]="form.email" />
+      @if (showEmailError) {
+        <ul class="message error">
+          @for (error of email.errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+    <div class="field">
+      <label for="id">ID da conta</label>
+      <input id="id" type="text" class="read" [formField]="form.id" />
+    </div>
+    <div class="field">
+      <label class="check">
+        <input id="id" type="checkbox" [formField]="form.newsletter" />
+        Assine nossa newsletter
+      </label>
+    </div>
+    <div class="field">
+      <label for="frequency">Escolha uma frequência</label>
+      <select id="frequency" [formField]="form.frequency">
+        <option value="daily">Diário</option>
+        <option value="weekly">Semanal</option>
+        <option value="monthly">Mensal</option>
+      </select>
+    </div>
+    <div class="field">
+      @let age = form.age();
+      @let showAgeError = age.invalid() && age.touched();
+      <label for="age">Idade</label>
+      <input id="age" type="number" [formField]="form.age" />
+      @if (showAgeError) {
+        <ul class="message error">
+          @for (error of age.errors(); track error.kind) {
+            <li>{{ error.message }}</li>
+          }
+        </ul>
+      }
+    </div>
+    @if (!form.guardianName().hidden()) {
+      <div class="field">
+        @let guardianName = form.guardianName();
+        @let showGuardianNameError =
+          guardianName.invalid() && guardianName.touched();
+        <label for="guardianName">Nome do responsável</label>
+        <input id="guardianName" type="text" [formField]="form.guardianName" />
+        @if (showGuardianNameError) {
+          <ul class="message error">
+            @for (error of guardianName.errors(); track error.kind) {
+              <li>{{ error.message }}</li>
+            }
+          </ul>
+        }
+      </div>
+    }
+    <button type="submit" (click)="$event.preventDefault()">Criar conta</button>
+  </form>
+  <pre>{{ model() | json }}</pre>
+</div>
