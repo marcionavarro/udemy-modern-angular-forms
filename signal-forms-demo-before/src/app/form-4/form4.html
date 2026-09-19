@@ -11,7 +11,6 @@
         [formField]="form.username"
         autocomplete="none"
         autofill="none"
-        [class.error]="showUsernameError"
       />
       @if (username.pending()) {
         <p class="message info">Verificando disponibilidade...</p>
@@ -43,7 +42,6 @@
         [formField]="form.email"
         autocomplete="none"
         autofill="none"
-        [class.error]="showEmailError"
       />
       @if (showEmailError) {
         <ul class="message error">
