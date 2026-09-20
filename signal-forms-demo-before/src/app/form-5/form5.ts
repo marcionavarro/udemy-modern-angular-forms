@@ -7,6 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import {
+  applyEach,
   debounce,
   disabled,
   email,
@@ -32,6 +33,7 @@ interface SignUpForm {
   newsletter: boolean;
   frequency: string;
   guardianName: string;
+  alternateEmails: string[];
 }
 
 @Component({
@@ -51,9 +53,15 @@ export class Form5 {
     newsletter: false,
     frequency: 'daily',
     guardianName: '',
+    alternateEmails: [''],
   });
 
   protected form = form(this.model, (s) => {
+    applyEach(s.alternateEmails, (e) => {
+      required(e, { message: 'Um e-mail alternativo é obrigatório.' });
+      email(e, { message: 'Insira um endereço de e-mail alternativo válido.' });
+    });
+
     readonly(s.id);
     disabled(s.frequency, ({ valueOf }) => !valueOf(s.newsletter));
     hidden(s.guardianName, ({ valueOf }) => valueOf(s.age) >= 18);
@@ -113,6 +121,22 @@ export class Form5 {
     });
     debounce(s.username, 300);
   });
+
+  protected addAlternateEmail() {
+    this.model.update((current) => ({
+      ...current,
+      alternateEmails: [...current.alternateEmails, ''],
+    }));
+  }
+
+  protected removeAlternateEmail(index: number) {
+    this.model.update((current) => ({
+      ...current,
+      alternateEmails: [
+        ...current.alternateEmails.filter((_, i) => i !== index),
+      ],
+    }));
+  }
 
   private checkUsernameAvailability(username: string): Promise<boolean> {
     return new Promise((resolve) => {

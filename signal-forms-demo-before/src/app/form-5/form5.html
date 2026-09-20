@@ -86,6 +86,54 @@
         }
       </div>
     }
+    <fieldset class="alternate-emails">
+      <legend>Endereços de e-mail alternativos</legend>
+      <div>
+        @for (email of form.alternateEmails; track $index) {
+          <div>
+            <div>
+              <input
+                type="email"
+                [formField]="email"
+                [placeholder]="`E-mail alternativo ${$index + 1}`"
+                autocomplete="none"
+                autofill="none"
+              />
+              @if (email().touched() && email().invalid()) {
+                <ul class="message error">
+                  @for (error of email().errors(); track error.kind) {
+                    <li>{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <button
+              type="button"
+              (click)="removeAlternateEmail($index)"
+              [attr.aria-label]="`Remover e-mail alternativo ${$index + 1}`"
+              [disabled]="form.alternateEmails.length === 1"
+            >
+              <svg width="16" height="16">
+                <use href="/assets/icons.svg#icon-trash"></use>
+              </svg>
+            </button>
+          </div>
+        }
+      </div>
+      <footer>
+        <button
+          type="button"
+          (click)="addAlternateEmail()"
+          class="add-email-btn"
+        >
+          <svg width="16" height="16" aria-hidden="true">
+            <use href="/assets/icons.svg#icon-plus"></use>
+          </svg>
+          <span>Adicionar e-mail</span>
+        </button>
+      </footer>
+    </fieldset>
+
     <button type="submit" (click)="$event.preventDefault()">Criar conta</button>
   </form>
   <pre>{{ model() | json }}</pre>
