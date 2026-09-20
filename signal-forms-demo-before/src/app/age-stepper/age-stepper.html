@@ -1,0 +1,23 @@
+<div class="field">
+  @let isDisabled = disabled() || readonly();
+  <label for="age">Idade</label>
+  <div class="age-stepper">
+    <button type="button" (click)="decrement()" [disabled]="isDisabled">
+      -
+    </button>
+    <span class="value">
+      {{ value() }}
+    </span>
+    <button type="button" (click)="increment()" [disabled]="isDisabled">
+      +
+    </button>
+  </div>
+
+  @if (touched() && invalid()) {
+    <ul class="message error">
+      @for (e of errors(); track e.kind) {
+        <li>{{ e.message }}</li>
+      }
+    </ul>
+  }
+</div>
