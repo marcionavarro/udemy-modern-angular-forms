@@ -53,7 +53,7 @@ As dependências de execução e desenvolvimento estão declaradas em `package.j
 
 ```bash
 git clone https://github.com/marcionavarro/udemy-modern-angular-forms
-cd signal-forms-demo-before
+cd udemy-modern-angular-forms
 ```
 
 ### 2️⃣ Instalar as dependências
