@@ -94,9 +94,10 @@ Os artefatos da build são gerados em `dist/`. Também é possível executar `np
 
 Formulario de cadastro
 
-![Formulário de cadastro](screenshots\preview_1.gif)
-
-![Formulário de login](screenshots\preview_2.gif)
+<div style="display:flex; width: 100%; max-width: 870px;">
+    <img src="screenshots\preview_1.gif" alt="Clique aqui para ver o GIF animado">
+    <img src="screenshots\preview_2.gif" alt="Clique aqui para ver o GIF animado">
+</div>
 
 ## 📁 Estrutura de diretórios
 
