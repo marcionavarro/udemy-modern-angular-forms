@@ -26,6 +26,7 @@ import {
 } from '@angular/forms/signals';
 import { UserIdMockService } from '../../service/UserIdMockService ';
 import { AgeStepper } from '../age-stepper/age-stepper';
+import { AuthApiMockService } from '../../service/auth-api.service';
 
 interface SignUpForm {
   username: string;
@@ -57,6 +58,8 @@ export class Form6 {
     guardianName: '',
     alternateEmails: [''],
   });
+
+  private api = inject(AuthApiMockService);
 
   protected form = form(
     this.model,
@@ -124,8 +127,21 @@ export class Form6 {
     {
       submission: {
         action: async (form) => {
-          console.log('Valor enviado: ', form().value());
-          await new Promise((resolve) => setTimeout(resolve, 1500));
+          const value = form().value();
+          const result = await this.api.register(value);
+          if (result.ok) {
+            console.log('Valor enviado: ', value);
+            return undefined;
+          }
+          return [
+            {
+              kind: 'server.unavailable',
+              message: `
+                Nosso serviço de cadastro está indisponível. 
+                Por favor, tente novamente em alguns minutos.
+            `,
+            },
+          ];
         },
       },
     },

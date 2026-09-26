@@ -1,6 +1,14 @@
 <div class="form-container">
   <h2>Criar Conta</h2>
   <form [formRoot]="form">
+    @if (form().errors().length) {
+      <ul class="message error">
+        @for (error of form().errors(); track error.kind) {
+          <li>{{ error.message }}</li>
+        }
+      </ul>
+    }
+
     <div class="field">
       @let username = form.username();
       @let showUsernameError = username.invalid() && username.touched();
