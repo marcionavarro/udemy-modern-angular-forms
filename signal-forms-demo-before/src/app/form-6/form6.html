@@ -1,6 +1,6 @@
 <div class="form-container">
   <h2>Criar Conta</h2>
-  <form>
+  <form [formRoot]="form">
     <div class="field">
       @let username = form.username();
       @let showUsernameError = username.invalid() && username.touched();
@@ -40,7 +40,7 @@
       }
     </div>
 
-    <app-age-stepper [formField]="form.age" />
+    <!-- <app-age-stepper [formField]="form.age" />
 
     @if (!form.guardianName().hidden()) {
       <div class="field">
@@ -57,8 +57,10 @@
           </ul>
         }
       </div>
-    }
-    <button type="submit" (click)="$event.preventDefault()">Criar conta</button>
+    } -->
+    <button type="submit" [disabled]="form().submitting()">
+      {{ form().submitting() ? 'Enviando...' : 'Criar conta' }}
+    </button>
   </form>
   <pre>{{ model() | json }}</pre>
 </div>
